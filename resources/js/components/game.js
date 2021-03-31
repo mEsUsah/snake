@@ -77,7 +77,10 @@ export default class Game{
 
             ctx.font = "20px Arial";
             ctx.fillText("Score: " + this.score, this.gameWidth/2, this.gameHeight/3);
-            ctx.fillText("Press SPACEBAR to retry", this.gameWidth/2, (this.gameHeight/3)*2); 
+            
+            ctx.font = "15px Arial"
+            ctx.fillText("[SPACEBAR] - retry", this.gameWidth/2, (this.gameHeight/3)*2); 
+            ctx.fillText("[ESC] - main menu", this.gameWidth/2, (this.gameHeight/3)*2 + 40); 
         }
         if(this.gameState == GAMESTATE.MENU){
             ctx.rect(0,0, this.gameWidth, this.gameHeight);

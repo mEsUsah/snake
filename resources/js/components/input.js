@@ -34,6 +34,8 @@ export default class InputHandler{
             } else if (game.gameState == GAMESTATE.GAMEOVER){
                 if(event.keyCode == 32){
                     game.start();
+                } else if(event.keyCode == 27){
+                    game.gameState = GAMESTATE.MENU;
                 }
             } else if (game.gameState == GAMESTATE.MENU){
                 if(event.keyCode == 32){
