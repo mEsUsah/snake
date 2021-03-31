@@ -43,9 +43,9 @@ export default class Apple{
             if(apple.position.x == game.snake.position.x && apple.position.y == game.snake.position.y){
                 apple.eaten = true;
                 game.snake.tailLength++;
-                game.score++;
+                game.score += game.pointsPrApple;
                 game.playGulp();
-                game.difficultyIncrease();
+                game.speedIncrease();
             }
         });
     }

@@ -40,6 +40,26 @@ export default class Game{
         this.score = 0;
         this.apples = [new Apple(this)];
         this.snake = new Snake(this);
+        switch(this.difficulty){
+            case 1: // easy
+                this.speed = 3;
+                this.applesPrScreen = 1;
+                this.speedIncrement = 1;
+                this.pointsPrApple = 1;
+                break;
+            case 2: // Normal
+                this.speed = 6;
+                this.applesPrScreen = 2;
+                this.speedIncrement = 1.5;
+                this.pointsPrApple = 2;
+                break;
+            case 3: // Hard
+                this.speed = 8;
+                this.applesPrScreen = 3;
+                this.speedIncrement = 1.5;
+                this.pointsPrApple = 3;
+                break;
+        }
         this.gameState = GAMESTATE.RUNNING;
 
     }
@@ -124,17 +144,19 @@ export default class Game{
             ctx.fillText("Medium", this.gameWidth/2, this.gameHeight/2);
             ctx.fillText("Hard", (this.gameWidth/4)*3, this.gameHeight/2);
             
+            ctx.font = "15px Arial"
+            ctx.fillText("Press SPACEBAR to start", this.gameWidth/2, (this.gameHeight/3)*2); 
 
         }
     }
 
-    difficultyIncrease(){
-        if(this.score == 10) this.speed += 1; 
-        if(this.score == 20) this.speed += 1; 
-        if(this.score == 30) this.speed += 1; 
-        if(this.score == 40) this.speed += 1; 
-        if(this.score == 50) this.speed += 1;
-        if(this.score == 60) this.speed += 1;
+    speedIncrease(){
+        if(this.score == this.difficulty*5) this.speed += this.speedIncrement; 
+        if(this.score == this.difficulty*10) this.speed += this.speedIncrement; 
+        if(this.score == this.difficulty*20) this.speed += this.speedIncrement; 
+        if(this.score == this.difficulty*40) this.speed += this.speedIncrement; 
+        if(this.score == this.difficulty*80) this.speed += this.speedIncrement;
+        if(this.score == this.difficulty*160) this.speed += this.speedIncrement;
     }
     
     isGameOver(){
