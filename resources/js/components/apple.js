@@ -26,6 +26,7 @@ export default class Apple{
                 game.snake.tailLength++;
                 game.score++;
                 game.soundGulp.play();
+                game.difficultyIncrease();
             }
         });
     }

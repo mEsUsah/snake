@@ -54,7 +54,6 @@ export default class Game{
             this.apple.checkAppleCollision(this);
             this.apple.removeEatenApples(this);
             this.apple.addApples(this);
-            this.difficultyIncrease();
             this.isGameOver();
         }
 
@@ -98,12 +97,12 @@ export default class Game{
     }
 
     difficultyIncrease(){
-        if(this.score > 10) this.speed += 1; 
-        if(this.score > 20) this.speed += 1; 
-        if(this.score > 30) this.speed += 1; 
-        if(this.score > 40) this.speed += 1; 
-        if(this.score > 50) this.speed += 1;
-        if(this.score > 60) this.speed += 1;
+        if(this.score == 10) this.speed += 1; 
+        if(this.score == 20) this.speed += 1; 
+        if(this.score == 30) this.speed += 1; 
+        if(this.score == 40) this.speed += 1; 
+        if(this.score == 50) this.speed += 1;
+        if(this.score == 60) this.speed += 1;
     }
     
     isGameOver(){
