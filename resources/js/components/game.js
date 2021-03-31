@@ -21,6 +21,7 @@ export default class Game{
         this.tileSize = this.gameWidth / this.tileCount - 2;
         this.changedDirection = false;
         
+        this.fourDimensions = false;
         this.speed = 0;
 
         this.difficulty = 2;
@@ -67,7 +68,7 @@ export default class Game{
     update(){
         this.changedDirection = false;
         if (this.gameState == GAMESTATE.RUNNING){
-            this.snake.updateSnakePosition();
+            this.snake.updateSnakePosition(this);
             this.apple.checkAppleCollision(this);
             this.apple.removeEatenApples(this);
             this.apple.addApples(this);
@@ -164,10 +165,12 @@ export default class Game{
         // check if game is started - dont game over before the snake starts to move
         if (this.snake.velocity.x === 0 && this.snake.velocity.y === 0) return;
         //walls
-        if(this.snake.position.x < 0) gameOver = true;
-        if(this.snake.position.x >= this.tileCount) gameOver = true;
-        if(this.snake.position.y < 0) gameOver = true;
-        if(this.snake.position.y >= this.tileCount) gameOver = true;
+        //if(!this.fourDimensions){
+            if(this.snake.position.x < 0) gameOver = true;
+            if(this.snake.position.x >= this.tileCount) gameOver = true;
+            if(this.snake.position.y < 0) gameOver = true;
+            if(this.snake.position.y >= this.tileCount) gameOver = true;
+        //}
     
         //body
         this.snake.snakeParts.forEach(part => {

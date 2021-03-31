@@ -56,8 +56,15 @@ export default class Snake {
     }
         
     
-    updateSnakePosition(){
-        this.position.x = this.position.x + this.velocity.x;
-        this.position.y = this.position.y + this.velocity.y;
+    updateSnakePosition(game){
+            this.position.x = this.position.x + this.velocity.x;
+            this.position.y = this.position.y + this.velocity.y;
+            
+        if(game.fourDimensions) {
+            if(this.position.x < 0)                 this.position.x = 19;
+            if(this.position.x >= game.tileCount)    this.position.x = 0;
+            if(this.position.y < 0)                 this.position.y = 19;
+            if(this.position.y >= game.tileCount)    this.position.y = 0;
+        }
     }
 }
