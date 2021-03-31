@@ -44,7 +44,7 @@ export default class Apple{
                 apple.eaten = true;
                 game.snake.tailLength++;
                 game.score++;
-                game.soundGulp.play();
+                game.playGulp();
                 game.difficultyIncrease();
             }
         });

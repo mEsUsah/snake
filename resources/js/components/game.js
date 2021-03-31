@@ -10,8 +10,6 @@ const GAMESTATE = {
     GAMEOVER: 4,
 }
 
-
-
 export default class Game{
     constructor(gameWidth, gameHeight){
         this.snake = new Snake(this);
@@ -22,8 +20,7 @@ export default class Game{
         this.tileCount = 20;
         this.tileSize = this.gameWidth / this.tileCount - 2;
         this.changedDirection = false;
-        this.soundGulp = new Audio("resources/sounds/blop.wav");
-
+        
         this.startSpeed = 7
         this.speed = 0;
 
@@ -139,10 +136,8 @@ export default class Game{
         ctx.fillText("Score: " + this.score, 10, this.gameHeight - 10);
     }
 
-    
-        
-    
-    
-    
-    
+    playGulp(){
+        let soundGulp = new Audio("resources/sounds/blop.wav");
+        soundGulp.play();
+    }
 }
