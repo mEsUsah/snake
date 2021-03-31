@@ -1,5 +1,6 @@
 import Apple from './apple';
 import InputHandler from './input';
+import Snake from './snake';
 
 const GAMESTATE = {
     PAUSED: 0,
@@ -9,16 +10,12 @@ const GAMESTATE = {
     GAMEOVER: 4,
 }
 
-class SnakePart{
-    constructor(x,y){
-        this.x = x;
-        this.y = y;
-    }
-}
+
 
 export default class Game{
     constructor(gameWidth, gameHeight){
         this.apple = new Apple(this);
+        this.snake = new Snake(this);
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
 
@@ -27,17 +24,10 @@ export default class Game{
         this.changedDirection = false;
         this.soundGulp = new Audio("resources/sounds/gulp.mp3");
 
-        this.speed = 7;
-        this.headY = 10;
-        this.headX = 10;
-        this.snakeParts = [];
-        this.tailLength = 2;
-
-        this.xVelocity=0;
-        this.yVelocity=0;
-
+        this.speed = 2;
         this.score = 0;
-        
+
+        this.applesPrScreen = 2;
         this.apples = [new Apple(this)];
 
         this.gameState = GAMESTATE.RUNNING;
@@ -50,7 +40,7 @@ export default class Game{
     update(){
         this.changedDirection = false;
         if (this.gameState == GAMESTATE.RUNNING){
-            this.updateSnakePosition();
+            this.snake.updateSnakePosition();
             this.apple.checkAppleCollision(this);
             this.apple.removeEatenApples(this);
             this.apple.addApples(this);
@@ -63,7 +53,7 @@ export default class Game{
     draw(ctx){
         this.clearScreen(ctx);
         this.apple.drawApple(ctx, this);
-        this.drawSnake(ctx);
+        this.snake.drawSnake(ctx, this, GAMESTATE);
 
         this.drawScore(ctx);
 
@@ -79,27 +69,27 @@ export default class Game{
     }
 
     difficultyIncrease(){
-        if(this.score > 10) this.speed = 8; 
-        if(this.score > 20) this.speed = 9; 
-        if(this.score > 30) this.speed = 10; 
-        if(this.score > 40) this.speed = 11; 
-        if(this.score > 50) this.speed = 12;
-        if(this.score > 60) this.speed = 13;
+        if(this.score > 10) this.speed += 1; 
+        if(this.score > 20) this.speed += 1; 
+        if(this.score > 30) this.speed += 1; 
+        if(this.score > 40) this.speed += 1; 
+        if(this.score > 50) this.speed += 1;
+        if(this.score > 60) this.speed += 1;
     }
     
     isGameOver(){
         let gameOver = false;
         // check if game is started - dont game over before the snake starts to move
-        if (this.xVelocity === 0 && this.yVelocity === 0) return;
+        if (this.snake.velocity.x === 0 && this.snake.velocity.y === 0) return;
         //walls
-        if(this.headX < 0) gameOver = true;
-        if(this.headX >= this.tileCount) gameOver = true;
-        if(this.headY < 0) gameOver = true;
-        if(this.headY >= this.tileCount) gameOver = true;
+        if(this.snake.head.x < 0) gameOver = true;
+        if(this.snake.head.x >= this.tileCount) gameOver = true;
+        if(this.snake.head.y < 0) gameOver = true;
+        if(this.snake.head.y >= this.tileCount) gameOver = true;
     
         //body
-        this.snakeParts.forEach(part => {
-            if(part.x === this.headX && part.y === this.headY){
+        this.snake.snakeParts.forEach(part => {
+            if(part.x === this.snake.head.x && part.y === this.snake.head.y){
                 gameOver = true;
             } 
             
@@ -120,37 +110,7 @@ export default class Game{
     }
         
     
-    drawSnake(ctx){
-        // draw the tail
-        ctx.fillStyle = "green";
-        for(let i= 0; i < this.snakeParts.length; i++){
-            let part = this.snakeParts[i];
-            ctx.fillRect(part.x * this.tileCount, part.y * this.tileCount, this.tileSize, this.tileSize);
-        }
-        
-        if(this.gameState == GAMESTATE.RUNNING){
-            // Move snake part 1:  add a new snakepart where the head is
-            this.snakeParts.push(new SnakePart(this.headX, this.headY)); //put item at the end of he list, at the spot whre the head is.
-            
-            // Move snake part 2: remove the last section of the snakepart (tail), so the snake has the same length after adding a new part
-            if(this.snakeParts.length > this.tailLength){
-                this.snakeParts.shift(); //remove the furthest from the snake (first)  
-            }
-        }
-        if(this.gameState == GAMESTATE.GAMEOVER){
-            ctx.fillStyle = 'red';
-            ctx.beginPath();
-            ctx.arc(this.headX* this.tileCount + this.tileSize/2, this.headY * this.tileCount + this.tileSize/2, 15, 0, 2 * Math.PI);
-            ctx.fill();
-        }
     
-        // Draw the snake head.
-        ctx.fillStyle = 'orange';
-        ctx.fillRect(this.headX * this.tileCount, this.headY * this.tileCount, this.tileSize, this.tileSize);
-    }
     
-    updateSnakePosition(){
-        this.headX = this.headX + this.xVelocity;
-        this.headY = this.headY + this.yVelocity;
-    }
+    
 }
