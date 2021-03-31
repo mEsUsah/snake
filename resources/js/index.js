@@ -8,7 +8,6 @@ let game = new Game(canvas.width, canvas.height);
 //gameloop
 function gameLoop(){
     game.update();
-    //if(game.isGameOver(ctx)) return;
     game.draw(ctx);
 
     setTimeout(gameLoop, 1000/ game.speed);

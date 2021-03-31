@@ -24,17 +24,27 @@ export default class Game{
         this.changedDirection = false;
         this.soundGulp = new Audio("resources/sounds/gulp.mp3");
 
-        this.speed = 2;
-        this.score = 0;
+        this.startSpeed = 7
+        this.speed = 0;
 
         this.applesPrScreen = 2;
-        this.apples = [new Apple(this)];
+        this.apples = [];
+        this.snake;
 
-        this.gameState = GAMESTATE.RUNNING;
+        this.gameState = GAMESTATE.MENU;
 
         //this.gamestate = GAMESTATE.MENU;
 
-        new InputHandler(this);
+        new InputHandler(this, GAMESTATE);
+    }
+
+    start(){
+        this.speed = this.startSpeed;
+        this.score = 0;
+        this.apples = [new Apple(this)];
+        this.snake = new Snake(this);
+        this.gameState = GAMESTATE.RUNNING;
+
     }
 
     update(){
@@ -65,6 +75,25 @@ export default class Game{
             ctx.font = "50px Verdana";
             ctx.textAlign = "center";
             ctx.fillText("GAME OVER", this.gameWidth / 2, this.gameHeight / 2 + 25);
+
+            ctx.font = "20px Arial";
+            ctx.fillText("Score: " + this.score, this.gameWidth/2, this.gameHeight/3);
+            ctx.fillText("Press SPACEBAR to retry", this.gameWidth/2, (this.gameHeight/3)*2); 
+        }
+        if(this.gameState == GAMESTATE.MENU){
+            ctx.rect(0,0, this.gameWidth, this.gameHeight);
+            ctx.fillStyle = "rgba(0,0,0,1)";
+            ctx.fill();
+
+            ctx.font = "20px Arial";
+            ctx.fillStyle="white";
+            ctx.textAlign = "center";
+            ctx.fillText("Press SPACEBAR to start", this.gameWidth/2, this.gameHeight/2);
+            ctx.fillStyle="#FF5000";
+            ctx.font = "50px Arial";
+            ctx.fillText("SNAKE!", this.gameWidth/2, this.gameHeight/3);
+            ctx.font = "20px Arial";
+            ctx.fillText("A clone by Stanley Skarshaug", this.gameWidth/2, (this.gameHeight/3)*2);
         }
     }
 
@@ -108,6 +137,8 @@ export default class Game{
         ctx.textAlign = "left";
         ctx.fillText("Score: " + this.score, 10, this.gameHeight - 10);
     }
+
+    
         
     
     
