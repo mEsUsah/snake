@@ -1,14 +1,33 @@
 export default class Apple{
     constructor(game){
         this.takenPositions = [];
-
-        this.position = {
-            x: Math.floor(Math.random() * game.tileCount),
-            y: Math.floor(Math.random() * game.tileCount),
-        }
+        this.position = this.generatePositions(game);
         this.eaten = false;
 
         
+    }
+
+    generatePositions(game){
+        let spaceIsOccupied = true;
+        let position = {
+            x: 0,
+            y: 0,
+        }
+        while (spaceIsOccupied){
+            spaceIsOccupied = false;
+            position = {
+                x: Math.floor(Math.random() * game.tileCount),
+                y: Math.floor(Math.random() * game.tileCount),
+            }
+
+            let occupiedSpaces = [...game.snake, ...game.snake.snakeParts];
+            occupiedSpaces.forEach(part => {
+                if(part.position.x == position.x && part.position.y == position.y){
+                    spaceIsOccupied = true;
+                }
+            });
+        }
+        return position;
     }
 
     drawApple(ctx, game){
@@ -21,7 +40,7 @@ export default class Apple{
     
     checkAppleCollision(game){
         game.apples.forEach(apple => {
-            if(apple.position.x == game.snake.head.x && apple.position.y == game.snake.head.y){
+            if(apple.position.x == game.snake.position.x && apple.position.y == game.snake.position.y){
                 apple.eaten = true;
                 game.snake.tailLength++;
                 game.score++;

@@ -1,14 +1,16 @@
 class SnakeTail{
     constructor(x,y){
-        this.x = x;
-        this.y = y;
+        this.position = {
+            x: x,
+            y: y,
+        }
     }
 }
 
 export default class Snake {
     constructor(game){
         
-        this.head = {
+        this.position = {
             x: 10,
             y: 10,
         }
@@ -27,12 +29,12 @@ export default class Snake {
         ctx.fillStyle = "green";
         for(let i= 0; i < this.snakeParts.length; i++){
             let part = this.snakeParts[i];
-            ctx.fillRect(part.x * game.tileCount, part.y * game.tileCount, game.tileSize, game.tileSize);
+            ctx.fillRect(part.position.x * game.tileCount, part.position.y * game.tileCount, game.tileSize, game.tileSize);
         }
 
         if(game.gameState == GAMESTATE.RUNNING){
-            // Move snake part 1:  add a new snakepart where the head is
-            this.snakeParts.push(new SnakeTail(this.head.x, this.head.y)); //put item at the end of he list, at the spot whre the head is.
+            // Move snake part 1:  add a new snakepart where the position is
+            this.snakeParts.push(new SnakeTail(this.position.x, this.position.y)); //put item at the end of he list, at the spot whre the position is.
             
             // Move snake part 2: remove the last section of the snakepart (tail), so the snake has the same length after adding a new part
             if(this.snakeParts.length > this.tailLength){
@@ -42,20 +44,20 @@ export default class Snake {
             if(this.gameState == GAMESTATE.GAMEOVER){
                 ctx.fillStyle = 'red';
                 ctx.beginPath();
-                ctx.arc(this.head.x * game.tileCount + game.tileSize / 2, this.head.y * game.tileCount + game.tileSize / 2, 15, 0, 2 * Math.PI);
+                ctx.arc(this.position.x * game.tileCount + game.tileSize / 2, this.position.y * game.tileCount + game.tileSize / 2, 15, 0, 2 * Math.PI);
                 ctx.fill();
             }
 
         }
     
-        // Draw the snake head.
+        // Draw the snake position.
         ctx.fillStyle = 'lightgreen';
-        ctx.fillRect(this.head.x * game.tileCount, this.head.y * game.tileCount, game.tileSize, game.tileSize);
+        ctx.fillRect(this.position.x * game.tileCount, this.position.y * game.tileCount, game.tileSize, game.tileSize);
     }
         
     
     updateSnakePosition(){
-        this.head.x = this.head.x + this.velocity.x;
-        this.head.y = this.head.y + this.velocity.y;
+        this.position.x = this.position.x + this.velocity.x;
+        this.position.y = this.position.y + this.velocity.y;
     }
 }

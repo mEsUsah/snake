@@ -14,8 +14,8 @@ const GAMESTATE = {
 
 export default class Game{
     constructor(gameWidth, gameHeight){
-        this.apple = new Apple(this);
         this.snake = new Snake(this);
+        this.apple = new Apple(this);
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
 
@@ -29,7 +29,6 @@ export default class Game{
 
         this.applesPrScreen = 2;
         this.apples = [];
-        this.snake;
 
         this.gameState = GAMESTATE.MENU;
 
@@ -113,14 +112,14 @@ export default class Game{
         // check if game is started - dont game over before the snake starts to move
         if (this.snake.velocity.x === 0 && this.snake.velocity.y === 0) return;
         //walls
-        if(this.snake.head.x < 0) gameOver = true;
-        if(this.snake.head.x >= this.tileCount) gameOver = true;
-        if(this.snake.head.y < 0) gameOver = true;
-        if(this.snake.head.y >= this.tileCount) gameOver = true;
+        if(this.snake.position.x < 0) gameOver = true;
+        if(this.snake.position.x >= this.tileCount) gameOver = true;
+        if(this.snake.position.y < 0) gameOver = true;
+        if(this.snake.position.y >= this.tileCount) gameOver = true;
     
         //body
         this.snake.snakeParts.forEach(part => {
-            if(part.x === this.snake.head.x && part.y === this.snake.head.y){
+            if(part.position.x === this.snake.position.x && part.position.y === this.snake.position.y){
                 gameOver = true;
             } 
             
