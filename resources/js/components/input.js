@@ -39,6 +39,15 @@ export default class InputHandler{
                 }
             } else if (game.gameState == GAMESTATE.MENU){
                 if(event.keyCode == 32){
+                    game.gameState = GAMESTATE.MENU_SETTINGS;
+                    //game.start();
+                }
+            } else if (game.gameState == GAMESTATE.MENU_SETTINGS){
+                if(event.keyCode == 39 && game.difficulty < 3){ //right
+                    game.difficulty++
+                } else if(event.keyCode == 37 && game.difficulty > 1){ //left
+                    game.difficulty--;
+                } else if(event.keyCode == 32){
                     game.start();
                 }
             }

@@ -6,7 +6,7 @@ const GAMESTATE = {
     PAUSED: 0,
     RUNNING: 1,
     MENU: 2,
-    NEWLEVEL: 3,
+    MENU_SETTINGS:21,
     GAMEOVER: 4,
 }
 
@@ -21,12 +21,13 @@ export default class Game{
         this.tileSize = this.gameWidth / this.tileCount - 2;
         this.changedDirection = false;
         
-        this.startSpeed = 7
         this.speed = 0;
 
+        this.difficulty = 2;
+        this.startSpeed = 7
         this.applesPrScreen = 2;
-        this.apples = [];
 
+        this.apples = [];
         this.gameState = GAMESTATE.MENU;
 
         //this.gamestate = GAMESTATE.MENU;
@@ -79,19 +80,51 @@ export default class Game{
             ctx.fillText("[ESC] - main menu", this.gameWidth/2, (this.gameHeight/3)*2 + 40); 
         }
         if(this.gameState == GAMESTATE.MENU){
-            ctx.rect(0,0, this.gameWidth, this.gameHeight);
             ctx.fillStyle = "rgba(0,0,0,1)";
+            ctx.rect(0,0, this.gameWidth, this.gameHeight);
             ctx.fill();
 
             ctx.font = "20px Arial";
             ctx.fillStyle="white";
             ctx.textAlign = "center";
-            ctx.fillText("Press SPACEBAR to start", this.gameWidth/2, this.gameHeight/2);
+            ctx.fillText("Press SPACEBAR to continue", this.gameWidth/2, this.gameHeight/2);
             ctx.fillStyle="#FF5000";
             ctx.font = "50px Arial";
             ctx.fillText("SNAKE!", this.gameWidth/2, this.gameHeight/3);
             ctx.font = "20px Arial";
             ctx.fillText("A clone by Stanley Skarshaug", this.gameWidth/2, (this.gameHeight/3)*2);
+        }
+        if(this.gameState == GAMESTATE.MENU_SETTINGS){
+            ctx.rect(0,0, this.gameWidth, this.gameHeight);
+            ctx.fillStyle = "rgba(0,0,0,1)";
+            ctx.fill();
+
+            ctx.font = "30px Arial";
+            ctx.fillStyle="white";
+            ctx.textAlign = "center";
+            ctx.fillText("Difficulty:", this.gameWidth/2, this.gameHeight/3);
+            ctx.font = "20px Arial";
+            
+            switch(this.difficulty){
+                case 1:
+                    ctx.fillStyle = "#FF5000";
+                    ctx.fillRect(this.gameWidth/4-50, this.gameHeight/2-25,100,40);
+                    break;
+                case 2:
+                    ctx.fillStyle = "#FF5000";
+                    ctx.fillRect(this.gameWidth/2-50, this.gameHeight/2-25,100,40);
+                    break;
+                case 3:
+                    ctx.fillStyle = "#FF5000";
+                    ctx.fillRect((this.gameWidth/4)*3-50, this.gameHeight/2-25,100,40);
+                    break;
+            }
+            ctx.fillStyle="white";
+            ctx.fillText("Easy", this.gameWidth/4, this.gameHeight/2);
+            ctx.fillText("Medium", this.gameWidth/2, this.gameHeight/2);
+            ctx.fillText("Hard", (this.gameWidth/4)*3, this.gameHeight/2);
+            
+
         }
     }
 
