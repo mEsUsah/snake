@@ -22,7 +22,7 @@ export default class Game{
         this.tileCount = 20;
         this.tileSize = this.gameWidth / this.tileCount - 2;
         this.changedDirection = false;
-        this.soundGulp = new Audio("resources/sounds/gulp.mp3");
+        this.soundGulp = new Audio("resources/sounds/blop.wav");
 
         this.startSpeed = 7
         this.speed = 0;
