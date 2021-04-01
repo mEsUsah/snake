@@ -4,7 +4,7 @@ export default class InputHandler{
         document.body.addEventListener('keydown', event => {
             if(game.gameState == GAMESTATE.RUNNING){
                 if(game.changedDirection) return;
-    
+                //up
                 if(event.keyCode == 38){
                     if(game.snake.velocity.y == 1) return // prevent to go backwards
                     game.snake.velocity.y = -1;
@@ -43,10 +43,19 @@ export default class InputHandler{
                     //game.start();
                 }
             } else if (game.gameState == GAMESTATE.MENU_SETTINGS){
-                if(event.keyCode == 39 && game.difficulty < 3){ //right
+                if(game.menuSelect == 1 && event.keyCode == 39 && game.difficulty < 3){ //right
                     game.difficulty++
-                } else if(event.keyCode == 37 && game.difficulty > 1){ //left
+                } else if(game.menuSelect == 1 && event.keyCode == 37 && game.difficulty > 1){ //left
                     game.difficulty--;
+                } else if(game.menuSelect == 1 && event.keyCode == 40){ // down
+                    game.menuSelect++;
+                } else if(game.menuSelect == 2 && event.keyCode == 38){ // up
+                    game.menuSelect--;
+                } else if(game.menuSelect == 2 && event.keyCode == 37 && game.fourDimensions <= 1){ //left
+                    game.fourDimensions--;
+                } else if(game.menuSelect == 2 && event.keyCode == 39 && game.fourDimensions <= 0){ //right
+                    game.fourDimensions++;
+
                 } else if(event.keyCode == 32){
                     game.start();
                 }

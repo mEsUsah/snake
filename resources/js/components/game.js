@@ -21,9 +21,10 @@ export default class Game{
         this.tileSize = this.gameWidth / this.tileCount - 2;
         this.changedDirection = false;
         
-        this.fourDimensions = false;
+        this.fourDimensions = 0;
         this.speed = 0;
 
+        this.menuSelect = 1;
         this.difficulty = 2;
         this.startSpeed = 7
         this.applesPrScreen = 2;
@@ -109,7 +110,7 @@ export default class Game{
             ctx.fillStyle="white";
             ctx.textAlign = "center";
             ctx.fillText("Press SPACEBAR to continue", this.gameWidth/2, this.gameHeight/2);
-            ctx.fillStyle="#FF5000";
+            ctx.fillStyle="green";
             ctx.font = "50px Arial";
             ctx.fillText("SNAKE!", this.gameWidth/2, this.gameHeight/3);
             ctx.font = "20px Arial";
@@ -120,33 +121,64 @@ export default class Game{
             ctx.fillStyle = "rgba(0,0,0,1)";
             ctx.fill();
 
-            ctx.font = "30px Arial";
-            ctx.fillStyle="white";
-            ctx.textAlign = "center";
-            ctx.fillText("Difficulty:", this.gameWidth/2, this.gameHeight/3);
             ctx.font = "20px Arial";
+            ctx.fillStyle="green";
+            ctx.textAlign = "center";
+            ctx.fillText("Difficulty:", this.gameWidth/2, this.gameHeight/4-10);
+            ctx.font = "20px Arial";
+
+            switch(this.menuSelect){
+                case 1:
+                    ctx.fillStyle = "#39c339";
+                    ctx.fillRect(this.gameWidth/4-60, this.gameHeight/3-30, (this.gameWidth/4)*3+20,50);
+                    break;
+                case 2:
+                    ctx.fillStyle = "#39c339";
+                    ctx.fillRect(this.gameWidth/4-60, (this.gameHeight/3)*2-30, (this.gameWidth/4)*3+20,50);
+                    break;
+            }
             
             switch(this.difficulty){
                 case 1:
-                    ctx.fillStyle = "#FF5000";
-                    ctx.fillRect(this.gameWidth/4-50, this.gameHeight/2-25,100,40);
+                    ctx.fillStyle = "green";
+                    ctx.fillRect(this.gameWidth/4-50, this.gameHeight/3-25,100,40);
                     break;
                 case 2:
-                    ctx.fillStyle = "#FF5000";
-                    ctx.fillRect(this.gameWidth/2-50, this.gameHeight/2-25,100,40);
+                    ctx.fillStyle = "green";
+                    ctx.fillRect(this.gameWidth/2-50, this.gameHeight/3-25,100,40);
                     break;
                 case 3:
-                    ctx.fillStyle = "#FF5000";
-                    ctx.fillRect((this.gameWidth/4)*3-50, this.gameHeight/2-25,100,40);
+                    ctx.fillStyle = "green";
+                    ctx.fillRect((this.gameWidth/4)*3-50, this.gameHeight/3-25,100,40);
                     break;
             }
             ctx.fillStyle="white";
-            ctx.fillText("Easy", this.gameWidth/4, this.gameHeight/2);
-            ctx.fillText("Medium", this.gameWidth/2, this.gameHeight/2);
-            ctx.fillText("Hard", (this.gameWidth/4)*3, this.gameHeight/2);
+            ctx.fillText("Easy", this.gameWidth/4, this.gameHeight/3);
+            ctx.fillText("Medium", this.gameWidth/2, this.gameHeight/3);
+            ctx.fillText("Hard", (this.gameWidth/4)*3, this.gameHeight/3);
+
+            switch(this.fourDimensions){
+                case 0:
+                    ctx.fillStyle = "green";
+                    ctx.fillRect(this.gameWidth/4-50, (this.gameHeight/3)*2-25,100,40);
+                    break;
+                case 1:
+                    ctx.fillStyle = "green";
+                    ctx.fillRect((this.gameWidth/4)*3-50, (this.gameHeight/3)*2-25,100,40);
+                    break;
+            }
+            ctx.fillStyle="green";
+            ctx.fillText("Game type:", this.gameWidth/2, (this.gameHeight/3)*2-40);
+            ctx.font = "20px Arial";
+            
+            ctx.fillStyle="white";
+            ctx.fillText("Normal", this.gameWidth/4, (this.gameHeight/3)*2);
+            //ctx.fillText("Medium", this.gameWidth/2, this.gameHeight/3);
+            ctx.fillText("4D", (this.gameWidth/4)*3, (this.gameHeight/3)*2);
+
             
             ctx.font = "15px Arial"
-            ctx.fillText("Press SPACEBAR to start", this.gameWidth/2, (this.gameHeight/3)*2); 
+            ctx.fillText("Press SPACEBAR to start, ARROWS to change", this.gameWidth/2, (this.gameHeight/7)*6); 
 
         }
     }
