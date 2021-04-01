@@ -1,6 +1,7 @@
 import Apple from './apple';
 import InputHandler from './input';
 import Snake from './snake';
+import menu from './menu';
 
 const GAMESTATE = {
     PAUSED: 0,
@@ -83,103 +84,8 @@ export default class Game{
         this.apple.drawApple(ctx, this);
         this.snake.drawSnake(ctx, this, GAMESTATE);
         this.drawScore(ctx);
-
-        if(this.gameState == GAMESTATE.GAMEOVER){
-            ctx.fillStyle = "rgba(0,0,0,0.5)";
-            ctx.fillRect(0,0,this.gameWidth, this.gameWidth);
-            
-            ctx.fillStyle = "white";
-            ctx.font = "50px Verdana";
-            ctx.textAlign = "center";
-            ctx.fillText("GAME OVER", this.gameWidth / 2, this.gameHeight / 2 + 25);
-
-            ctx.font = "20px Arial";
-            ctx.fillText("Score: " + this.score, this.gameWidth/2, this.gameHeight/3);
-            
-            ctx.font = "15px Arial"
-            ctx.fillText("[SPACEBAR] - retry", this.gameWidth/2, (this.gameHeight/3)*2); 
-            ctx.fillText("[ESC] - main menu", this.gameWidth/2, (this.gameHeight/3)*2 + 40); 
-        }
-        if(this.gameState == GAMESTATE.MENU){
-            ctx.fillStyle = "rgba(0,0,0,1)";
-            ctx.rect(0,0, this.gameWidth, this.gameHeight);
-            ctx.fill();
-
-            ctx.font = "20px Arial";
-            ctx.fillStyle="white";
-            ctx.textAlign = "center";
-            ctx.fillText("Press SPACEBAR to continue", this.gameWidth/2, this.gameHeight/2);
-            ctx.fillStyle="green";
-            ctx.font = "50px Arial";
-            ctx.fillText("SNAKE!", this.gameWidth/2, this.gameHeight/3);
-            ctx.font = "20px Arial";
-            ctx.fillText("A clone by Stanley Skarshaug", this.gameWidth/2, (this.gameHeight/3)*2);
-        }
-        if(this.gameState == GAMESTATE.MENU_SETTINGS){
-            ctx.rect(0,0, this.gameWidth, this.gameHeight);
-            ctx.fillStyle = "rgba(0,0,0,1)";
-            ctx.fill();
-
-            ctx.font = "20px Arial";
-            ctx.fillStyle="green";
-            ctx.textAlign = "center";
-            ctx.fillText("Difficulty:", this.gameWidth/2, this.gameHeight/4-10);
-            ctx.font = "20px Arial";
-
-            switch(this.menuSelect){
-                case 1:
-                    ctx.fillStyle = "#39c339";
-                    ctx.fillRect(this.gameWidth/4-60, this.gameHeight/3-30, (this.gameWidth/4)*3+20,50);
-                    break;
-                case 2:
-                    ctx.fillStyle = "#39c339";
-                    ctx.fillRect(this.gameWidth/4-60, (this.gameHeight/3)*2-30, (this.gameWidth/4)*3+20,50);
-                    break;
-            }
-            
-            switch(this.difficulty){
-                case 1:
-                    ctx.fillStyle = "green";
-                    ctx.fillRect(this.gameWidth/4-50, this.gameHeight/3-25,100,40);
-                    break;
-                case 2:
-                    ctx.fillStyle = "green";
-                    ctx.fillRect(this.gameWidth/2-50, this.gameHeight/3-25,100,40);
-                    break;
-                case 3:
-                    ctx.fillStyle = "green";
-                    ctx.fillRect((this.gameWidth/4)*3-50, this.gameHeight/3-25,100,40);
-                    break;
-            }
-            ctx.fillStyle="white";
-            ctx.fillText("Easy", this.gameWidth/4, this.gameHeight/3);
-            ctx.fillText("Medium", this.gameWidth/2, this.gameHeight/3);
-            ctx.fillText("Hard", (this.gameWidth/4)*3, this.gameHeight/3);
-
-            switch(this.fourDimensions){
-                case 0:
-                    ctx.fillStyle = "green";
-                    ctx.fillRect(this.gameWidth/4-50, (this.gameHeight/3)*2-25,100,40);
-                    break;
-                case 1:
-                    ctx.fillStyle = "green";
-                    ctx.fillRect((this.gameWidth/4)*3-50, (this.gameHeight/3)*2-25,100,40);
-                    break;
-            }
-            ctx.fillStyle="green";
-            ctx.fillText("Game type:", this.gameWidth/2, (this.gameHeight/3)*2-40);
-            ctx.font = "20px Arial";
-            
-            ctx.fillStyle="white";
-            ctx.fillText("Normal", this.gameWidth/4, (this.gameHeight/3)*2);
-            //ctx.fillText("Medium", this.gameWidth/2, this.gameHeight/3);
-            ctx.fillText("4D", (this.gameWidth/4)*3, (this.gameHeight/3)*2);
-
-            
-            ctx.font = "15px Arial"
-            ctx.fillText("Press SPACEBAR to start, ARROWS to change", this.gameWidth/2, (this.gameHeight/7)*6); 
-
-        }
+        menu(ctx, this, GAMESTATE);
+        
     }
 
     speedIncrease(){
