@@ -21,9 +21,9 @@ export default class Snake {
 
         this.snakeParts = [];
         this.tailLength = 2;
-        this.reflexSaver = false;
+        this.reflexSaverWall = false;
+        this.reflexSaverTail = false;
     }
-    
 
     drawSnake(ctx, game, GAMESTATE){
         // draw the tail
@@ -56,21 +56,35 @@ export default class Snake {
         ctx.fillRect(this.position.x * game.tileCount, this.position.y * game.tileCount, game.tileSize, game.tileSize);
     }
         
-    
     updateSnakePosition(game){
-        // Check to see if the reflexSaver is not active - then give a chance to save, if reflexSaver is active, don't give another chanse
-        if(this.reflexSaver == false){
+        // Reflex save - Walls
+        if(this.reflexSaverWall == false && game.fourDimensions == false){
             if(     this.position.x + this.velocity.x >= game.tileCount
                 ||  this.position.y + this.velocity.y >= game.tileCount
                 ||  this.position.x + this.velocity.x < 0
                 ||  this.position.y + this.velocity.y < 0
             ) {
-                this.reflexSaver = true;
+                this.reflexSaverWall = true;
+                console.log("reflex WALL");
                 return;
             }
         } else {
-            this.reflexSaver = false;
+            this.reflexSaverWall = false;
         }
+
+        // Reflex save - Tail
+        if(this.reflexSaverTail == false){
+            this.snakeParts.forEach(part =>{
+                if(part.position.x == this.position.x + this.velocity.x && part.position.y == this.position.y + this.velocity.y){
+                    this.reflexSaverTail = true;
+                    return;
+                }
+            });
+            if(this.reflexSaverTail == true) return;
+        } else {
+            this.reflexSaverTail = false;
+        }
+
         // of ok, move
         this.position.x = this.position.x + this.velocity.x;
         this.position.y = this.position.y + this.velocity.y;
