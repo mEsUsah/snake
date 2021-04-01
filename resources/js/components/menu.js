@@ -1,23 +1,5 @@
 export default function menu(ctx, game, GAMESTATE) {
-    // ---------------------------------
-    // Game Over Screen
-    // ---------------------------------
-    if(game.gameState == GAMESTATE.GAMEOVER){
-        ctx.fillStyle = "rgba(0,0,0,0.5)";
-        ctx.fillRect(0,0,game.gameWidth, game.gameWidth);
-        
-        ctx.fillStyle = "white";
-        ctx.font = "50px Verdana";
-        ctx.textAlign = "center";
-        ctx.fillText("GAME OVER", game.gameWidth / 2, game.gameHeight / 2 + 25);
-
-        ctx.font = "20px Arial";
-        ctx.fillText("Score: " + game.score, game.gameWidth/2, game.gameHeight/3);
-        
-        ctx.font = "15px Arial"
-        ctx.fillText("[SPACEBAR] - retry", game.gameWidth/2, (game.gameHeight/3)*2); 
-        ctx.fillText("[ESC] - main menu", game.gameWidth/2, (game.gameHeight/3)*2 + 40); 
-    }
+    
     // ---------------------------------
     // Welcome Menu 
     // ---------------------------------
@@ -101,8 +83,42 @@ export default function menu(ctx, game, GAMESTATE) {
         //ctx.fillText("Medium", game.gameWidth/2, game.gameHeight/3);
         ctx.fillText("4D", (game.gameWidth/4)*3, (game.gameHeight/3)*2);
 
-        
         ctx.font = "15px Arial"
         ctx.fillText("Press SPACEBAR to start, ARROWS to change", game.gameWidth/2, (game.gameHeight/7)*6); 
     }
+
+    // ---------------------------------
+    // Game Over Screen
+    // ---------------------------------
+    if(game.gameState == GAMESTATE.GAMEOVER){
+        ctx.fillStyle = "rgba(0,0,0,0.5)";
+        ctx.fillRect(0,0,game.gameWidth, game.gameWidth);
+        
+        ctx.fillStyle = "white";
+        ctx.font = "50px Verdana";
+        ctx.textAlign = "center";
+        ctx.fillText("GAME OVER", game.gameWidth / 2, game.gameHeight / 2 + 25);
+
+        ctx.font = "20px Arial";
+        ctx.fillText("Score: " + game.score, game.gameWidth/2, game.gameHeight/3);
+        
+        ctx.font = "15px Arial"
+        ctx.fillText("[SPACEBAR] - retry", game.gameWidth/2, (game.gameHeight/3)*2); 
+        ctx.fillText("[ESC] - main menu", game.gameWidth/2, (game.gameHeight/3)*2 + 40); 
+    }
+
+
+    // ---------------------------------
+    // Pause Screen
+    // ---------------------------------
+    if(game.gameState == GAMESTATE.PAUSED){
+        ctx.fillStyle = "rgba(0,0,0,0.5)";
+        ctx.fillRect(0,0,game.gameWidth, game.gameWidth);
+
+        ctx.font = "30px Arial";
+        ctx.fillStyle="white";
+        ctx.textAlign = "center";
+        ctx.fillText("Paused", game.gameWidth/2, game.gameHeight/2);
+    }
+
 }

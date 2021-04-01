@@ -35,6 +35,22 @@ export default class InputHandler{
                 }
                 game.changedDirection = true;
 
+                // esc
+                if(event.keyCode == 27){
+                    game.gameState = GAMESTATE.PAUSED;
+                }
+            
+            // ---------------------------------
+            // Pause Screen
+            // ---------------------------------  
+            } else if (game.gameState == GAMESTATE.PAUSED){
+                if(event.keyCode == 27){
+                    game.gameState = GAMESTATE.RUNNING;
+                } 
+
+            // ---------------------------------
+            // Game Over Screen
+            // ---------------------------------  
             } else if (game.gameState == GAMESTATE.GAMEOVER){
                 if(event.keyCode == 32){
                     game.start();
