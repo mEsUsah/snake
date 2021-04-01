@@ -70,20 +70,23 @@ export default class Game{
         this.changedDirection = false;
         if (this.gameState == GAMESTATE.RUNNING){
             this.snake.updateSnakePosition(this);
-            this.apple.checkAppleCollision(this);
-            this.apple.removeEatenApples(this);
-            this.apple.addApples(this);
-            this.isGameOver();
+            if(this.snake.reflexSaver == false){
+                this.apple.checkAppleCollision(this);
+                this.apple.removeEatenApples(this);
+                this.apple.addApples(this);
+                this.isGameOver();
+            }
         }
-
     }
 
     draw(ctx){
-        this.clearScreen(ctx);
-        this.apple.drawApple(ctx, this);
-        this.snake.drawSnake(ctx, this, GAMESTATE);
+        if(this.snake.reflexSaver == false){
+            this.clearScreen(ctx);
+            this.apple.drawApple(ctx, this);
+            this.snake.drawSnake(ctx, this, GAMESTATE);
+            this.drawScore(ctx);
+        }
 
-        this.drawScore(ctx);
 
         if(this.gameState == GAMESTATE.GAMEOVER){
             ctx.fillStyle = "rgba(0,0,0,0.5)";

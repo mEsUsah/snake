@@ -21,6 +21,7 @@ export default class Snake {
 
         this.snakeParts = [];
         this.tailLength = 2;
+        this.reflexSaver = false;
     }
     
 
@@ -51,14 +52,28 @@ export default class Snake {
         }
     
         // Draw the snake position.
-        ctx.fillStyle = 'lightgreen';
+        ctx.fillStyle = '#39c339';
         ctx.fillRect(this.position.x * game.tileCount, this.position.y * game.tileCount, game.tileSize, game.tileSize);
     }
         
     
     updateSnakePosition(game){
-            this.position.x = this.position.x + this.velocity.x;
-            this.position.y = this.position.y + this.velocity.y;
+        // Check to see if the reflexSaver is not active - then give a chance to save, if reflexSaver is active, don't give another chanse
+        if(this.reflexSaver == false){
+            if(     this.position.x + this.velocity.x >= game.tileCount
+                ||  this.position.y + this.velocity.y >= game.tileCount
+                ||  this.position.x + this.velocity.x < 0
+                ||  this.position.y + this.velocity.y < 0
+            ) {
+                this.reflexSaver = true;
+                return;
+            }
+        } else {
+            this.reflexSaver = false;
+        }
+        // of ok, move
+        this.position.x = this.position.x + this.velocity.x;
+        this.position.y = this.position.y + this.velocity.y;
             
         if(game.fourDimensions) {
             if(this.position.x < 0)                 this.position.x = 19;
@@ -66,5 +81,13 @@ export default class Snake {
             if(this.position.y < 0)                 this.position.y = 19;
             if(this.position.y >= game.tileCount)    this.position.y = 0;
         }
+    }
+
+    checkForWallCollision(){
+        if(this.position.x < 0) return true;
+        if(this.position.x >= game.tileCount) return true;
+        if(this.position.y < 0)  return true;
+        if(this.position.y >= game.tileCount) return true;
+        return false;
     }
 }
