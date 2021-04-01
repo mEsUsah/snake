@@ -1,4 +1,4 @@
 node_modules
-web/resources/js/*
-web/resources/css/*
+#web/resources/js/*
+#web/resources/css/*
 web/resources/timestamp.json
