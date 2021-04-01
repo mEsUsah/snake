@@ -2,6 +2,10 @@ export default class InputHandler{
     constructor(game, GAMESTATE){
         this.game = game;
         document.body.addEventListener('keydown', event => {
+            
+            // ---------------------------------
+            // Gameplay
+            // ---------------------------------
             if(game.gameState == GAMESTATE.RUNNING){
                 if(game.changedDirection) return;
                 //up
@@ -37,11 +41,19 @@ export default class InputHandler{
                 } else if(event.keyCode == 27){
                     game.gameState = GAMESTATE.MENU;
                 }
+
+            // ---------------------------------
+            // Welcome Menu 
+            // ---------------------------------    
             } else if (game.gameState == GAMESTATE.MENU){
                 if(event.keyCode == 32){
                     game.gameState = GAMESTATE.MENU_SETTINGS;
                     //game.start();
                 }
+
+            // ---------------------------------
+            // Settings Menu
+            // ---------------------------------
             } else if (game.gameState == GAMESTATE.MENU_SETTINGS){
                 if(game.menuSelect == 1 && event.keyCode == 39 && game.difficulty < 3){ //right
                     game.difficulty++

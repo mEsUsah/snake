@@ -34,24 +34,22 @@ export default class Snake {
         }
 
         if(game.gameState == GAMESTATE.RUNNING){
-            // Move snake part 1:  add a new snakepart where the position is
+            // Add a new snakepart where the head position was last frame
             this.snakeParts.push(new SnakeTail(this.position.x, this.position.y)); //put item at the end of he list, at the spot whre the position is.
             
-            // Move snake part 2: remove the last section of the snakepart (tail), so the snake has the same length after adding a new part
+            // Remove the last section of the snakepart (tail), so the snake has the same length after adding a new part for new frame
             if(this.snakeParts.length > this.tailLength){
-                this.snakeParts.shift(); //remove the furthest from the snake (first) 
+                this.snakeParts.shift();
             } 
     
-            if(this.gameState == GAMESTATE.GAMEOVER){
-                ctx.fillStyle = 'red';
-                ctx.beginPath();
-                ctx.arc(this.position.x * game.tileCount + game.tileSize / 2, this.position.y * game.tileCount + game.tileSize / 2, 15, 0, 2 * Math.PI);
-                ctx.fill();
-            }
-
+        } else if(game.gameState == GAMESTATE.GAMEOVER){
+            ctx.fillStyle = '#FF5000';
+            ctx.beginPath();
+            ctx.arc(this.position.x * game.tileCount + game.tileSize / 2, this.position.y * game.tileCount + game.tileSize / 2, 15, 0, 2 * Math.PI);
+            ctx.fill();
         }
     
-        // Draw the snake position.
+        // Move head to new positon
         ctx.fillStyle = '#39c339';
         ctx.fillRect(this.position.x * game.tileCount, this.position.y * game.tileCount, game.tileSize, game.tileSize);
     }
@@ -84,7 +82,7 @@ export default class Snake {
             this.reflexSaverTail = false;
         }
 
-        // of ok, move
+        // Move to new position
         this.position.x = this.position.x + this.velocity.x;
         this.position.y = this.position.y + this.velocity.y;
             
@@ -94,13 +92,5 @@ export default class Snake {
             if(this.position.y < 0)                 this.position.y = 19;
             if(this.position.y >= game.tileCount)    this.position.y = 0;
         }
-    }
-
-    checkForWallCollision(){
-        if(this.position.x < 0) return true;
-        if(this.position.x >= game.tileCount) return true;
-        if(this.position.y < 0)  return true;
-        if(this.position.y >= game.tileCount) return true;
-        return false;
     }
 }
