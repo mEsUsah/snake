@@ -65,7 +65,6 @@ export default class Snake {
                 ||  this.position.y + this.velocity.y < 0
             ) {
                 this.reflexSaverWall = true;
-                console.log("reflex WALL");
                 return;
             }
         } else {
