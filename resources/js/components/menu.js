@@ -18,6 +18,16 @@ export default function menu(ctx, game, GAMESTATE) {
         ctx.fillText("SNAKE!", game.gameWidth/2, game.gameHeight/3);
         ctx.font = "20px Arial";
         ctx.fillText("A clone by Stanley Skarshaug", game.gameWidth/2, (game.gameHeight/3)*2);
+        
+        ctx.font = "small-caption";
+        ctx.fillStyle="white";
+        ctx.textAlign = "left";
+        ctx.fillText("www.skarshaugs.no", 10, game.gameHeight - 10);
+        
+        ctx.font = "small-caption";
+        ctx.fillStyle="white";
+        ctx.textAlign = "right";
+        ctx.fillText("v1.01", game.gameWidth - 10, game.gameHeight - 10);
     }
 
     // ---------------------------------
