@@ -1,5 +1,13 @@
 export default class InputHandler{
     constructor(game, GAMESTATE){
+        // Stop arrow keys from scrolling the page the game embedded into.
+        window.addEventListener("keydown", function(e) {
+            if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+                e.preventDefault();
+            }
+        }, false);
+        
+        // Game inputs
         this.game = game;
         document.body.addEventListener('keydown', event => {
             
