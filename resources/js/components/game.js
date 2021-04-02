@@ -129,7 +129,7 @@ export default class Game{
     }
 
     playGulp(){
-        let soundGulp = new Audio("resources/sounds/blop.wav");
+        let soundGulp = new Audio("/resources/portfolio/snake/sounds/blop.wav");
         soundGulp.play();
     }
 }
