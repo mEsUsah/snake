@@ -3,6 +3,7 @@ Clone based on the youtube video tutorial https://www.youtube.com/watch?v=7Azlj0
 
 This was my very second game written from scratch.
 I followed the youtube video, and rewrote the game, made it object oriented and added a lot of functionality, including touch controls and simple fullscreen capabileties.
+The game can be played on my homepage [haxor.no](https://www.haxor.no/portfolio/snake).
 
 Game has three difficulty levels, and two game modes.
 
