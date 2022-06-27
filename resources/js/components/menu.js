@@ -95,7 +95,7 @@ export default function menu(ctx, game, GAMESTATE) {
         ctx.fillStyle="white";
         ctx.fillText("Normal", game.gameWidth/4, (game.gameHeight/3)*2);
         //ctx.fillText("Medium", game.gameWidth/2, game.gameHeight/3);
-        ctx.fillText("4D", (game.gameWidth/4)*3, (game.gameHeight/3)*2);
+        ctx.fillText("Wrap", (game.gameWidth/4)*3, (game.gameHeight/3)*2);
 
         ctx.font = "15px Arial"
         if(window.innerWidth > 1000){
