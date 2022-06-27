@@ -1,5 +1,10 @@
 export default class InputHandler{
     constructor(game, GAMESTATE){
+        this.touchX = '';
+        this.touchY = '';
+        this.touchThreshold = 30;
+        this.swipeDirection = '';
+        
         // Stop arrow keys from scrolling the page the game embedded into.
         window.addEventListener("keydown", function(e) {
             if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
@@ -9,6 +14,39 @@ export default class InputHandler{
         
         // Game inputs
         this.game = game;
+
+        window.addEventListener('touchstart', e =>{
+            this.touchY = e.changedTouches[0].pageY;
+            this.touchX = e.changedTouches[0].pageX;
+        });
+
+        window.addEventListener('touchend', e =>{
+            const swipeDistanceY = e.changedTouches[0].pageY - this.touchY;
+            const swipeDistanceX = e.changedTouches[0].pageX - this.touchX;
+
+            this.swipeDirection = 'click';
+            
+            // Vertical swipe
+            if(Math.abs(swipeDistanceY) > Math.abs(swipeDistanceX)){
+                if (swipeDistanceY < -this.touchThreshold ){
+                    this.swipeDirection = 'up';
+                } else if (swipeDistanceY > this.touchThreshold){
+                    this.swipeDirection = 'down';
+                }
+            }
+
+            // Horizontal swipe
+            if(Math.abs(swipeDistanceY) < Math.abs(swipeDistanceX)){
+                if (swipeDistanceX < -this.touchThreshold ){
+                    this.swipeDirection = 'left';
+                } else if (swipeDistanceX > this.touchThreshold){
+                    this.swipeDirection = 'right';
+                }
+            }
+
+            console.log(this.swipeDirection);
+        });
+
         document.body.addEventListener('keydown', event => {
             
             // ---------------------------------
