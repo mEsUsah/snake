@@ -117,8 +117,15 @@ export default class Game{
     }
     
     clearScreen(ctx){
-        ctx.fillStyle = "black";
-        ctx.fillRect(0,0,this.gameWidth, this.gameWidth);
+        if(document.fullscreenElement){ // Add border if fullscreen
+            ctx.fillStyle = "red";
+            ctx.fillRect(0,0,this.gameWidth, this.gameWidth);
+            ctx.fillStyle = "black";
+            ctx.fillRect(2,2,this.gameWidth-4, this.gameWidth-4);
+        } else {
+            ctx.fillStyle = "black";
+            ctx.fillRect(0,0,this.gameWidth, this.gameWidth);
+        }
     }
     
     drawScore(ctx){
