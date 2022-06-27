@@ -11,6 +11,15 @@ const GAMESTATE = {
     GAMEOVER: 4,
 }
 
+const INPUT = {
+    UP: 1,
+    DOWN: 2,
+    LEFT: 3,
+    RIGHT: 4,
+    ENTER: 5,
+    PAUSE: 6
+}
+
 export default class Game{
     constructor(gameWidth, gameHeight){
         this.snake = new Snake(this);
@@ -33,7 +42,7 @@ export default class Game{
         this.apples = [];
         this.gameState = GAMESTATE.MENU;
 
-        new InputHandler(this, GAMESTATE);
+        new InputHandler(this, GAMESTATE, INPUT);
     }
 
     start(){

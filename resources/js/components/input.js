@@ -1,9 +1,9 @@
 export default class InputHandler{
-    constructor(game, GAMESTATE){
+    constructor(game, GAMESTATE, INPUT){
         this.touchX = '';
         this.touchY = '';
         this.touchThreshold = 30;
-        this.swipeDirection = '';
+        this.input = 0;
         
         // Stop arrow keys from scrolling the page the game embedded into.
         window.addEventListener("keydown", function(e) {
@@ -27,57 +27,61 @@ export default class InputHandler{
             const swipeDistanceY = e.changedTouches[0].pageY - this.touchY;
             const swipeDistanceX = e.changedTouches[0].pageX - this.touchX;
 
-            this.swipeDirection = 'click';
+            this.input = INPUT.ENTER;
             
             // Vertical swipe
             if(Math.abs(swipeDistanceY) > Math.abs(swipeDistanceX)){
                 if (swipeDistanceY < -this.touchThreshold ){
-                    this.swipeDirection = 'up';
+                    this.input = INPUT.UP;
                 } else if (swipeDistanceY > this.touchThreshold){
-                    this.swipeDirection = 'down';
+                    this.input = INPUT.DOWN;
                 }
             }
 
             // Horizontal swipe
             if(Math.abs(swipeDistanceY) < Math.abs(swipeDistanceX)){
                 if (swipeDistanceX < -this.touchThreshold ){
-                    this.swipeDirection = 'left';
+                    this.input = INPUT.LEFT;
                 } else if (swipeDistanceX > this.touchThreshold){
-                    this.swipeDirection = 'right';
+                    this.input = INPUT.RIGHT;
                 }
             }
 
-            inputAction(this.swipeDirection);
+            inputAction(this.input);
         });
 
         // Keyboard events
         document.body.addEventListener('keydown', event => {
 
             if(event.code === 'Space'){
-                this.swipeDirection = 'click';
+                this.input = INPUT.ENTER;
             }
 
             if(event.code === 'ArrowDown'){
-                this.swipeDirection = 'down';
+                this.input = INPUT.DOWN;
             }
 
             if(event.code === 'ArrowUp'){
-                this.swipeDirection = 'up';
+                this.input = INPUT.UP;
             }
 
             if(event.code === 'ArrowLeft'){
-                this.swipeDirection = 'left';
+                this.input = INPUT.LEFT;
             }
 
             if(event.code === 'ArrowRight'){
-                this.swipeDirection = 'right';
+                this.input = INPUT.RIGHT;
+            }
+            if(event.code === 'Pause'){
+                this.input = INPUT.PAUSE;
             }
 
-            inputAction(this.swipeDirection);
+            inputAction(this.input);
         });
 
         // Handle input
         const inputAction = (action) => {
+            console.log(action, INPUT.ENTER);
             // ---------------------------------
             // Gameplay
             // ---------------------------------
@@ -85,34 +89,34 @@ export default class InputHandler{
             {
                 if(game.changedDirection) return;
                 //up
-                if(action == 'up'){
+                if(action == INPUT.UP){
                     if(game.snake.velocity.y == 1) return // prevent to go backwards
                     game.snake.velocity.y = -1;
                     game.snake.velocity.x = 0;
                 }
                 //down
-                if(action == 'down'){
+                if(action == INPUT.DOWN){
                     if(game.snake.velocity.y == -1) return // prevent to go backwards
                     game.snake.velocity.y = 1;
                     game.snake.velocity.x = 0;
                 }
             
                 //left
-                if(action == 'left'){
+                if(action == INPUT.LEFT){
                     if(game.snake.velocity.x == 1) return // prevent to go backwards
                     game.snake.velocity.y = 0;
                     game.snake.velocity.x = -1;
                 }
                 //right
-                if(action == 'right'){
+                if(action == INPUT.RIGHT){
                     if(game.snake.velocity.x == -1) return // prevent to go backwards
                     game.snake.velocity.y = 0;
                     game.snake.velocity.x = 1;
                 }
                 game.changedDirection = true;
 
-                // esc
-                if(action == 'click'){
+                // space
+                if(action == INPUT.PAUSE){
                     game.gameState = GAMESTATE.PAUSED;
                 }
             }
@@ -121,7 +125,7 @@ export default class InputHandler{
             // Pause Screen
             // ---------------------------------  
             else if (game.gameState == GAMESTATE.PAUSED){
-                if(action == 'click'){
+                if(action == INPUT.PAUSE){
                     game.gameState = GAMESTATE.RUNNING;
                 }
             }
@@ -130,9 +134,9 @@ export default class InputHandler{
             // Game Over Screen
             // ---------------------------------  
             else if (game.gameState == GAMESTATE.GAMEOVER){
-                if(action == 'right'){
+                if(action == INPUT.RIGHT){
                     game.start();
-                } else if(action == 'left'){
+                } else if(action == INPUT.LEFT){
                     game.gameState = GAMESTATE.MENU;
                 }
             }
@@ -142,7 +146,7 @@ export default class InputHandler{
             // ---------------------------------    
             else if (game.gameState == GAMESTATE.MENU)
             {
-                if(action == 'click'){
+                if(action == INPUT.ENTER){
                     game.gameState = GAMESTATE.MENU_SETTINGS;
                     //game.start();
                 }
@@ -153,20 +157,20 @@ export default class InputHandler{
             // ---------------------------------
             else if (game.gameState == GAMESTATE.MENU_SETTINGS)
             {
-                if(game.menuSelect == 1 && action == 'right' && game.difficulty < 3){ //right
+                if(game.menuSelect == 1 && action == INPUT.RIGHT && game.difficulty < 3){ //right
                     game.difficulty++
-                } else if(game.menuSelect == 1 && action == 'left' && game.difficulty > 1){ //left
+                } else if(game.menuSelect == 1 && action == INPUT.LEFT && game.difficulty > 1){ //left
                     game.difficulty--;
-                } else if(game.menuSelect == 1 && action == 'down'){ // down
+                } else if(game.menuSelect == 1 && action == INPUT.DOWN){ // down
                     game.menuSelect++;
-                } else if(game.menuSelect == 2 && action == 'up'){ // up
+                } else if(game.menuSelect == 2 && action == INPUT.UP){ // up
                     game.menuSelect--;
-                } else if(game.menuSelect == 2 && action == 'left' && game.fourDimensions <= 1){ //left
+                } else if(game.menuSelect == 2 && action == INPUT.LEFT && game.fourDimensions <= 1){ //left
                     game.fourDimensions--;
-                } else if(game.menuSelect == 2 && action == 'right' && game.fourDimensions <= 0){ //right
+                } else if(game.menuSelect == 2 && action == INPUT.RIGHT && game.fourDimensions <= 0){ //right
                     game.fourDimensions++;
     
-                } else if(action == 'click'){
+                } else if(action == INPUT.ENTER){
                     game.start();
                 }
             }
