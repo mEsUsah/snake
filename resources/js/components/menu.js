@@ -12,7 +12,11 @@ export default function menu(ctx, game, GAMESTATE) {
         ctx.font = "20px Arial";
         ctx.fillStyle="white";
         ctx.textAlign = "center";
-        ctx.fillText("Press SPACEBAR to continue", game.gameWidth/2, game.gameHeight/2);
+        if(window.innerWidth > 1000){
+            ctx.fillText("Press SPACEBAR to continue", game.gameWidth/2, game.gameHeight/2);
+        } else {
+            ctx.fillText("Tap screen to continue", game.gameWidth/2, game.gameHeight/2);
+        }
         ctx.fillStyle="green";
         ctx.font = "50px Arial";
         ctx.fillText("SNAKE!", game.gameWidth/2, game.gameHeight/3);
@@ -27,7 +31,7 @@ export default function menu(ctx, game, GAMESTATE) {
         ctx.font = "small-caption";
         ctx.fillStyle="white";
         ctx.textAlign = "right";
-        ctx.fillText("v1.01", game.gameWidth - 10, game.gameHeight - 10);
+        ctx.fillText("v1.1.0", game.gameWidth - 10, game.gameHeight - 10);
     }
 
     // ---------------------------------
@@ -94,7 +98,11 @@ export default function menu(ctx, game, GAMESTATE) {
         ctx.fillText("4D", (game.gameWidth/4)*3, (game.gameHeight/3)*2);
 
         ctx.font = "15px Arial"
-        ctx.fillText("Press SPACEBAR to start, ARROWS to change", game.gameWidth/2, (game.gameHeight/7)*6); 
+        if(window.innerWidth > 1000){
+            ctx.fillText("Press SPACEBAR to start, ARROWS to change", game.gameWidth/2, (game.gameHeight/7)*6); 
+        } else {
+            ctx.fillText("Tap screen to start, swipe to change", game.gameWidth/2, (game.gameHeight/7)*6);
+        }
     }
 
     // ---------------------------------
@@ -113,8 +121,9 @@ export default function menu(ctx, game, GAMESTATE) {
         ctx.fillText("Score: " + game.score, game.gameWidth/2, game.gameHeight/3);
         
         ctx.font = "15px Arial"
-        ctx.fillText("[SPACEBAR] - retry", game.gameWidth/2, (game.gameHeight/3)*2); 
-        ctx.fillText("[ESC] - main menu", game.gameWidth/2, (game.gameHeight/3)*2 + 40); 
+
+        ctx.fillText("→ retry", game.gameWidth/2, (game.gameHeight/3)*2); 
+        ctx.fillText("← main menu", game.gameWidth/2, (game.gameHeight/3)*2 + 40); 
     }
 
 
