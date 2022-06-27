@@ -26,7 +26,7 @@ export default function menu(ctx, game, GAMESTATE) {
         ctx.font = "small-caption";
         ctx.fillStyle="white";
         ctx.textAlign = "left";
-        ctx.fillText("www.skarshaugs.no", 10, game.gameHeight - 10);
+        ctx.fillText("www.haxor.no", 10, game.gameHeight - 10);
         
         ctx.font = "small-caption";
         ctx.fillStyle="white";
