@@ -52,24 +52,24 @@ export default class InputHandler{
 
         // Keyboard events
         document.body.addEventListener('keydown', event => {
-
+            console.log(event.code);
             if(event.code === 'Space'){
                 this.input = INPUT.ENTER;
             }
 
-            if(event.code === 'ArrowDown'){
+            if(event.code === 'ArrowDown' || event.code === 'KeyS'){
                 this.input = INPUT.DOWN;
             }
 
-            if(event.code === 'ArrowUp'){
+            if(event.code === 'ArrowUp' || event.code === 'KeyW'){
                 this.input = INPUT.UP;
             }
 
-            if(event.code === 'ArrowLeft'){
+            if(event.code === 'ArrowLeft'  || event.code === 'KeyA'){
                 this.input = INPUT.LEFT;
             }
 
-            if(event.code === 'ArrowRight'){
+            if(event.code === 'ArrowRight'  || event.code === 'KeyD'){
                 this.input = INPUT.RIGHT;
             }
             if(event.code === 'Pause'){
