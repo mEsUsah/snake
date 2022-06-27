@@ -72,9 +72,6 @@ export default class InputHandler{
             if(event.code === 'ArrowRight'){
                 this.swipeDirection = 'right';
             }
-            if(event.code === 'Pause'){
-                this.swipeDirection = 'pause';
-            }
 
             inputAction(this.swipeDirection);
         });
