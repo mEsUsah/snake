@@ -11,16 +11,19 @@ export default class InputHandler{
                 e.preventDefault();
             }
         }, false);
-        
+
         // Game inputs
         this.game = game;
-
-        window.addEventListener('touchstart', e =>{
+        
+        // Touch events
+        let canvas = document.getElementById("gameScreen");
+        
+        canvas.addEventListener('touchstart', e =>{
             this.touchY = e.changedTouches[0].pageY;
             this.touchX = e.changedTouches[0].pageX;
         });
 
-        window.addEventListener('touchend', e =>{
+        canvas.addEventListener('touchend', e =>{
             const swipeDistanceY = e.changedTouches[0].pageY - this.touchY;
             const swipeDistanceX = e.changedTouches[0].pageX - this.touchX;
 
@@ -44,37 +47,67 @@ export default class InputHandler{
                 }
             }
 
-            console.log(this.swipeDirection);
+            inputAction(this.swipeDirection);
         });
 
+        // Keyboard events
         document.body.addEventListener('keydown', event => {
-            
+
+            if(event.code === 'Space'){
+                this.swipeDirection = 'click';
+            }
+
+            if(event.code === 'ArrowDown'){
+                this.swipeDirection = 'down';
+            }
+
+            if(event.code === 'ArrowUp'){
+                this.swipeDirection = 'up';
+            }
+
+            if(event.code === 'ArrowLeft'){
+                this.swipeDirection = 'left';
+            }
+
+            if(event.code === 'ArrowRight'){
+                this.swipeDirection = 'right';
+            }
+            if(event.code === 'Pause'){
+                this.swipeDirection = 'pause';
+            }
+
+            inputAction(this.swipeDirection);
+        });
+
+        // Handle input
+        const inputAction = (action) => {
             // ---------------------------------
             // Gameplay
             // ---------------------------------
-            if(game.gameState == GAMESTATE.RUNNING){
+            if(game.gameState == GAMESTATE.RUNNING)
+            {
                 if(game.changedDirection) return;
                 //up
-                if(event.keyCode == 38){
+                if(action == 'up'){
                     if(game.snake.velocity.y == 1) return // prevent to go backwards
                     game.snake.velocity.y = -1;
                     game.snake.velocity.x = 0;
                 }
                 //down
-                if(event.keyCode == 40){
+                if(action == 'down'){
                     if(game.snake.velocity.y == -1) return // prevent to go backwards
                     game.snake.velocity.y = 1;
                     game.snake.velocity.x = 0;
                 }
             
                 //left
-                if(event.keyCode == 37){
+                if(action == 'left'){
                     if(game.snake.velocity.x == 1) return // prevent to go backwards
                     game.snake.velocity.y = 0;
                     game.snake.velocity.x = -1;
                 }
                 //right
-                if(event.keyCode == 39){
+                if(action == 'right'){
                     if(game.snake.velocity.x == -1) return // prevent to go backwards
                     game.snake.velocity.y = 0;
                     game.snake.velocity.x = 1;
@@ -82,58 +115,66 @@ export default class InputHandler{
                 game.changedDirection = true;
 
                 // esc
-                if(event.keyCode == 27){
+                if(action == 'click'){
                     game.gameState = GAMESTATE.PAUSED;
                 }
-            
+            }
+
             // ---------------------------------
             // Pause Screen
             // ---------------------------------  
-            } else if (game.gameState == GAMESTATE.PAUSED){
-                if(event.keyCode == 27){
+            else if (game.gameState == GAMESTATE.PAUSED){
+                if(action == 'click'){
                     game.gameState = GAMESTATE.RUNNING;
-                } 
-
+                }
+            }
+            
             // ---------------------------------
             // Game Over Screen
             // ---------------------------------  
-            } else if (game.gameState == GAMESTATE.GAMEOVER){
-                if(event.keyCode == 32){
+            else if (game.gameState == GAMESTATE.GAMEOVER){
+                if(action == 'right'){
                     game.start();
-                } else if(event.keyCode == 27){
+                } else if(action == 'left'){
                     game.gameState = GAMESTATE.MENU;
                 }
-
+            }
+            
             // ---------------------------------
             // Welcome Menu 
             // ---------------------------------    
-            } else if (game.gameState == GAMESTATE.MENU){
-                if(event.keyCode == 32){
+            else if (game.gameState == GAMESTATE.MENU)
+            {
+                if(action == 'click'){
                     game.gameState = GAMESTATE.MENU_SETTINGS;
                     //game.start();
                 }
+            }
 
             // ---------------------------------
             // Settings Menu
             // ---------------------------------
-            } else if (game.gameState == GAMESTATE.MENU_SETTINGS){
-                if(game.menuSelect == 1 && event.keyCode == 39 && game.difficulty < 3){ //right
+            else if (game.gameState == GAMESTATE.MENU_SETTINGS)
+            {
+                if(game.menuSelect == 1 && action == 'right' && game.difficulty < 3){ //right
                     game.difficulty++
-                } else if(game.menuSelect == 1 && event.keyCode == 37 && game.difficulty > 1){ //left
+                } else if(game.menuSelect == 1 && action == 'left' && game.difficulty > 1){ //left
                     game.difficulty--;
-                } else if(game.menuSelect == 1 && event.keyCode == 40){ // down
+                } else if(game.menuSelect == 1 && action == 'down'){ // down
                     game.menuSelect++;
-                } else if(game.menuSelect == 2 && event.keyCode == 38){ // up
+                } else if(game.menuSelect == 2 && action == 'up'){ // up
                     game.menuSelect--;
-                } else if(game.menuSelect == 2 && event.keyCode == 37 && game.fourDimensions <= 1){ //left
+                } else if(game.menuSelect == 2 && action == 'left' && game.fourDimensions <= 1){ //left
                     game.fourDimensions--;
-                } else if(game.menuSelect == 2 && event.keyCode == 39 && game.fourDimensions <= 0){ //right
+                } else if(game.menuSelect == 2 && action == 'right' && game.fourDimensions <= 0){ //right
                     game.fourDimensions++;
-
-                } else if(event.keyCode == 32){
+    
+                } else if(action == 'click'){
                     game.start();
                 }
             }
-        });
+
+        
+        }
     }
 }
