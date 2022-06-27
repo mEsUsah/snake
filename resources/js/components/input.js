@@ -2,7 +2,7 @@ export default class InputHandler{
     constructor(game, GAMESTATE, INPUT){
         this.touchX = '';
         this.touchY = '';
-        this.touchThreshold = 30;
+        this.touchThreshold = 20;
         this.input = 0;
         
         // Stop arrow keys from scrolling the page the game embedded into.
